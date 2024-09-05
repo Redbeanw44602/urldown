@@ -2,12 +2,13 @@ import os
 import urllib3
 import time
 
+from urllib.parse import urlparse, urlunparse, urlencode, parse_qsl
 import config
 
 
 def download(url, save_path):
-    if os.path.exists(save_path):  # for debug use only
-        return True
+    # if os.path.exists(save_path):  # for debug use only
+    #     return True
 
     http = urllib3.PoolManager()
     attempt = 0
@@ -41,3 +42,20 @@ def download(url, save_path):
             attempt += 1
             time.sleep(5)
     return True
+
+
+def get_base_url(url):
+    """remove filename and query parameter from url"""
+
+    url = urlparse(url)
+    return urlunparse(
+        (url.scheme, url.netloc, '/'.join(url.path.split('/')[:-1]) + '/', '', '', '')
+    )
+
+
+def add_query_param(url, param_name, param_value):
+    url_parts = list(urlparse(url))
+    query = dict(parse_qsl(url_parts[4]))
+    query[param_name] = param_value
+    url_parts[4] = urlencode(query)
+    return urlunparse(url_parts)
