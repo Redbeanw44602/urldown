@@ -1,0 +1,33 @@
+name: Build Executable
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller
+        pip install -r requirements.txt
+
+    - name: Build with pyinstaller
+      run: |
+        pyinstaller -F src/main.py
+        
+    - uses: actions/upload-artifact@v3
+      with:
+        name: urldown-dev
+        path: dist
