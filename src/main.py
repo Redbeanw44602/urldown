@@ -27,7 +27,7 @@ REGISTERED_TOOLS = [
 
 
 def print_welcome():
-    print(f'ToolBox Version: {config.VERSION}')
+    print(f'UrlDown Version: {config.VERSION}')
 
 
 def print_tools_available():
