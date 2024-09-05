@@ -1,4 +1,6 @@
 import re
+import shutil
+import os
 
 import pyperclip
 
@@ -11,12 +13,14 @@ from tool.__base__ import URLHandler
 
 from tool.book118 import Book118URLHandler
 from tool.doudin import DoudinURLHandler
+from tool.imac_cast import IMacCastURLHandler
 from tool.tencent_meeting import TencentMeetingURLHandler
 from tool.yumpu import YumPuURLHandler
 
 REGISTERED_TOOLS = [
     Book118URLHandler(),
     DoudinURLHandler(),
+    IMacCastURLHandler(),
     TencentMeetingURLHandler(),
     YumPuURLHandler(),
 ]
@@ -40,7 +44,17 @@ def select_tool_by_url(url: str) -> URLHandler | None:
     return None
 
 
+def clear_tmps():
+    shutil.rmtree('temp', ignore_errors=True)
+
+
+def init_dirs():
+    clear_tmps()
+    os.makedirs('temp', exist_ok=True)
+
+
 def main():
+    init_dirs()
     print_welcome()
 
     url = pyperclip.paste()
@@ -75,3 +89,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
     util.system.pause()
+    clear_tmps()

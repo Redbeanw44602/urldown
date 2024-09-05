@@ -8,7 +8,7 @@ class URLHandler(object):
     def get_name(self) -> str:
         __purecall__()
 
-    def get_supported_url_patterns(self, url: str) -> list[str]:
+    def get_supported_url_patterns(self) -> list[str]:
         __purecall__()
 
     def handle(self, url: str):

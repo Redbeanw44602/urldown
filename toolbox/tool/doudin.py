@@ -30,10 +30,10 @@ class DoudinURLHandler(URLHandler):
         __check_response__(response)
         response = response.content.decode()
         book_detail = response[response.find('var readerConfig = {') :]
-        page_count = int(re.search('(?<=allPage:)(.+)(?=,)', book_detail).group())
-        product_id = re.search('(?<=productId:)(.+)(?=,)', book_detail).group()
-        token = re.search('(?<=flash_param_hzq:")(.+)(?=",)', book_detail).group()
-        title = sanitize_filename(re.search('(?<=productName:")(.+)(?=",)', book_detail).group())
+        page_count = int(re.search(r'(?<=allPage:)(.+)(?=,)', book_detail).group())
+        product_id = re.search(r'(?<=productId:)(.+)(?=,)', book_detail).group()
+        token = re.search(r'(?<=flash_param_hzq:")(.+)(?=",)', book_detail).group()
+        title = sanitize_filename(re.search(r'(?<=productName:")(.+)(?=",)', book_detail).group())
         print(f'Target book: {title} ({product_id})')
         print(f'  Pages: {page_count}')
         if os.path.exists(title):
