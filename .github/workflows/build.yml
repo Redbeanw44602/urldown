@@ -27,7 +27,7 @@ jobs:
       run: |
         pyinstaller -F src/main.py
         
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: urldown-dev
         path: dist
